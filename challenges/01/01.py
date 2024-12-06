@@ -1,14 +1,4 @@
-from pathlib import Path
-
-
-def get_puzzle_input():
-    with open(Path(__file__).parent / "puzzle_input.txt", "r") as f:
-        return f.read()
-
-
-def get_test_input():
-    with open(Path(__file__).parent / "test_input.txt", "r") as f:
-        return f.read()
+from challenges.utils import get_puzzle_input, get_test_input
 
 
 def solve(input):
@@ -36,6 +26,6 @@ def solve(input):
 
 
 if __name__ == "__main__":
-    # puzzle_input = get_puzzle_input()
-    puzzle_input = get_test_input()  # Uncomment for testing
+    # puzzle_input = get_puzzle_input(__file__)
+    puzzle_input = get_test_input(__file__)  # Uncomment for testing
     print(solve(puzzle_input))

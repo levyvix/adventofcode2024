@@ -35,6 +35,6 @@ def solve(input):
 
 
 if __name__ == "__main__":
-    puzzle_input = get_puzzle_input()
-    # puzzle_input = get_test_input()
+    puzzle_input = get_puzzle_input(__file__)
+    # puzzle_input = get_test_input(__file__)
     print(solve(puzzle_input))
