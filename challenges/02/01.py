@@ -23,6 +23,11 @@ def solve(input):
 
 
 if __name__ == "__main__":
-    puzzle_input = get_puzzle_input(__file__)
-    # puzzle_input = get_test_input(__file__)
-    print(solve(puzzle_input))
+    run_prod = True
+
+    if run_prod:
+        puzzle_input_prod = get_puzzle_input(__file__)
+        print("prod: ", solve(puzzle_input_prod))
+
+    puzzle_input_test = get_test_input(__file__)
+    print("test: ", solve(puzzle_input_test))
