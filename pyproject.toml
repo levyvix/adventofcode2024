@@ -9,10 +9,12 @@ dependencies = [
     "mypy>=1.13.0",
     "pytest>=8.3.4",
     "ruff>=0.8.2",
+    "taskipy>=1.14.1",
 ]
 
 [tool.taskipy.tasks]
 lint = "ruff check . "
 format = "ruff format ."
 typecheck = "mypy -p challenges"
-cehck = "task lint && task typecheck"
+check = "task lint && task typecheck"
+test = "pytest ."
