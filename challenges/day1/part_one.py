@@ -1,4 +1,4 @@
-from typing import List, Tuple, Generator
+from typing import List, Tuple, Iterable
 from challenges.utils import get_test_input, get_puzzle_input
 
 
@@ -47,7 +47,7 @@ class Solver:
         self.first_numbers.sort()
         self.second_numbers.sort()
 
-    def _get_paired_numbers(self) -> Generator[Tuple[int, int], None, None]:
+    def _get_paired_numbers(self) -> Iterable[Tuple[int, int]]:
         """Create pairs of numbers from the sorted lists.
 
         Returns:

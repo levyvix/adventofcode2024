@@ -4,13 +4,12 @@ from challenges.utils import get_test_input, get_puzzle_input
 
 class Solver:
     def __init__(self, input: str):
-        self.input = input
-        self.input = self._format_input()
-        self.numbers_left = []
-        self.numbers_right = []
+        self.input = self._format_input(input)
+        self.numbers_left: list[int] = []
+        self.numbers_right: list[int] = []
 
-    def _format_input(self) -> list[str]:
-        return self.input.splitlines()
+    def _format_input(self, input: str) -> list[str]:
+        return input.splitlines()
 
     def _get_two_lists(self) -> None:
         for line in self.input:

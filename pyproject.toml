@@ -7,5 +7,12 @@ requires-python = ">=3.13"
 dependencies = [
     "loguru>=0.7.3",
     "mypy>=1.13.0",
+    "pytest>=8.3.4",
     "ruff>=0.8.2",
 ]
+
+[tool.taskipy.tasks]
+lint = "ruff check . "
+format = "ruff format ."
+typecheck = "mypy -p challenges"
+cehck = "task lint && task typecheck"
