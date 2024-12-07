@@ -1,5 +1,5 @@
-from .part_one import solve as part_one_solve
-from .part_two import solve as part_two_solve
+from challenges.day3.part_one import solve as part_one_solve
+from challenges.day3.part_two import solve as part_two_solve
 from challenges.utils import get_test_input, get_puzzle_input
 
 
