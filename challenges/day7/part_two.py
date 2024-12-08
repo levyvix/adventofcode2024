@@ -1,4 +1,3 @@
-import string
 from itertools import product
 
 from tqdm import tqdm

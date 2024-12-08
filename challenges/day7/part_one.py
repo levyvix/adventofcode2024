@@ -1,4 +1,3 @@
-import string
 from itertools import product
 
 from challenges.utils import get_puzzle_input, get_test_input
