@@ -7,8 +7,8 @@ def solve(puzzle_input: str):
     lines = puzzle_input.splitlines()
 
     guard_location = (0, 0)
-    for i, l in enumerate(lines):
-        for j in range(len(l)):
+    for i, line in enumerate(lines):
+        for j in range(len(line)):
             if lines[i][j] == "^":
                 guard_location = (i, j)
 
