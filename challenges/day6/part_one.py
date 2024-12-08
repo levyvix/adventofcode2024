@@ -58,7 +58,7 @@ def solve(puzzle_input: str):
 
 
 if __name__ == "__main__":
-    run_prod = True
+    run_prod = False
 
     if run_prod:
         puzzle_input_prod = get_puzzle_input(__file__)
