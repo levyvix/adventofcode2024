@@ -1,16 +1,14 @@
-from challenges.utils import get_puzzle_input, get_test_input
 from loguru import logger
-from itertools import permutations
-from tqdm import tqdm
-from math import factorial
+
+from challenges.utils import get_puzzle_input, get_test_input
 
 
 class Validator:
     def __init__(self, raw_input: str):
         self.puzzle_input = raw_input
-        self.afters_before = {}
-        self.safe_pages = []
-        self.middle_numbers = []
+        self.afters_before: dict[str, dict[str, list]] = {}
+        self.safe_pages: list[str] = []
+        self.middle_numbers: list[int] = []
 
     def build_hashmap(self):
         for line in self.puzzle_input.splitlines():
@@ -59,7 +57,7 @@ class Validator:
                 return num
         return None
 
-    def get_correct_order(self, line: str) -> str | None:
+    def get_correct_order(self, line: str) -> list | None:
         nums = line.split(",")
         result = []
         remaining = set(nums)
