@@ -2,7 +2,6 @@
 from itertools import cycle
 
 from pathos.multiprocessing import Pool
-from tqdm import tqdm
 
 from challenges.utils import get_puzzle_input, get_test_input
 
