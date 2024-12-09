@@ -1,13 +1,14 @@
 from challenges.utils import get_puzzle_input, get_test_input
 from loguru import logger
+from typing import List
 
 
 class Validator:
     def __init__(self, raw_input: str):
         self.puzzle_input = raw_input
-        self.afters_before = {}
-        self.safe_pages = []
-        self.middle_numbers = []
+        self.afters_before: dict[str, dict[str, List[str]]] = {}
+        self.safe_pages: list[str] = []
+        self.middle_numbers: list[int] = []
 
     def build_hashmap(self):
         for line in self.puzzle_input.splitlines():

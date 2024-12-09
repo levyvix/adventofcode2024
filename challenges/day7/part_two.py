@@ -17,16 +17,16 @@ def solve(puzzle_input: str):
             product(operations, repeat=len(equations) - 1),
             total=3 ** (len(equations) - 1),
         ):
-            sum_of_combination = equations[0]
+            sum_of_combination = int(equations[0])
             for i, op in enumerate(combination):
                 next_number = equations[i + 1]
                 if op == "+":
-                    sum_of_combination = eval(
-                        f"{sum_of_combination} {op} {next_number}"
+                    sum_of_combination = int(
+                        eval(f"{sum_of_combination} {op} {next_number}")
                     )
                 if op == "*":
-                    sum_of_combination = eval(
-                        f"{sum_of_combination} {op} {next_number}"
+                    sum_of_combination = int(
+                        eval(f"{sum_of_combination} {op} {next_number}")
                     )
                 if op == "||":
                     sum_of_combination = int(f"{sum_of_combination}{next_number}")

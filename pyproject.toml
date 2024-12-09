@@ -21,3 +21,7 @@ format = "ruff format ."
 typecheck = "mypy -p challenges"
 check = "task lint && task typecheck"
 test = "pytest ."
+
+
+[tool.mypy]
+disable_error_code = "import-untyped"

@@ -105,7 +105,7 @@ def obstacle_loop(guard_location, lines):
                         # he is going in a direction he has already been
                         loop = True
                         break
-                except Exception as e:
+                except IndexError:
                     pass
             locations.append(guard_location)
 
@@ -137,7 +137,7 @@ def solve(puzzle_input: str):
     with Pool() as pool:
         # Usar imap_unordered para integração direta com tqdm
         results = pool.starmap(
-            obstacle_loop, [(guard_location, l) for l in list_of_new_lines]
+            obstacle_loop, [(guard_location, new) for new in list_of_new_lines]
         )
 
         for result in results:

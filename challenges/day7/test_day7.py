@@ -2,6 +2,8 @@ from challenges.day7.part_one import solve as part_one_solve
 from challenges.day7.part_two import solve as part_two_solve
 from challenges.utils import get_puzzle_input, get_test_input
 
+run_prod = False
+
 
 def test_part_one_test():
     puzzle_input_test = get_test_input(__file__)
@@ -10,11 +12,13 @@ def test_part_one_test():
     assert result == 3749
 
 
-# def test_part_one_prod():
-#     puzzle_input_prod = get_puzzle_input(__file__)
-#     result = part_one_solve(puzzle_input_prod)
+def test_part_one_prod():
+    if not run_prod:
+        return
+    puzzle_input_prod = get_puzzle_input(__file__)
+    result = part_one_solve(puzzle_input_prod)
 
-#     assert result == 5162
+    assert result == 5162
 
 
 def test_part_two_test():
@@ -24,8 +28,10 @@ def test_part_two_test():
     assert result == 11387
 
 
-# def test_part_two_prod():
-#     puzzle_input_prod = get_puzzle_input(__file__)
-#     result = part_two_solve(puzzle_input_prod)
+def test_part_two_prod():
+    if not run_prod:
+        return
+    puzzle_input_prod = get_puzzle_input(__file__)
+    result = part_two_solve(puzzle_input_prod)
 
-#     assert result == 1909
+    assert result == 1909

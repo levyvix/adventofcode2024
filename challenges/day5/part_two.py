@@ -2,11 +2,13 @@ from loguru import logger
 
 from challenges.utils import get_puzzle_input, get_test_input
 
+from typing import List
+
 
 class Validator:
     def __init__(self, raw_input: str):
         self.puzzle_input = raw_input
-        self.afters_before: dict[str, dict[str, list]] = {}
+        self.afters_before: dict[str, dict[str, List[str]]] = {}
         self.safe_pages: list[str] = []
         self.middle_numbers: list[int] = []
 
@@ -89,11 +91,11 @@ class Validator:
     def is_line_safe(self, line: str):
         checks = []
         for page in line.strip().split(","):
-            befores, afters = line.split(page)
-            befores = befores.strip().split(",")
+            befores_raw, afters_raw = line.split(page)
+            befores = befores_raw.strip().split(",")
             # remove empty strings
             befores = [x for x in befores if x != ""]
-            afters = afters.strip().split(",")
+            afters = afters_raw.strip().split(",")
             # remove empty strings
             afters = [x for x in afters if x != ""]
 

@@ -6,7 +6,14 @@ from tqdm import tqdm
 from challenges.utils import get_puzzle_input, get_test_input
 
 
-def draw(lines, antenas: list[tuple[int, int]], antinodes: set):
+def draw(lines, antenas: list[tuple[int, int]], antinodes: set) -> None:
+    """Draw a grid with antenas and antinodes.
+
+    Args:
+        lines (list[str]): the original grid
+        antenas (list[tuple[int, int]]): the coordinates of the antenas
+        antinodes (set): the antinodes coordinates
+    """
     grid = [["." for _ in range(len(lines[0]))] for _ in range(len(lines))]
 
     for x, y in antenas:
@@ -24,12 +31,11 @@ def draw(lines, antenas: list[tuple[int, int]], antinodes: set):
         print(f"{i:>2}: {''.join(line)}")
 
 
-def solve(puzzle_input: str):
+def solve(puzzle_input: str) -> int:
     cache: dict[str, list[tuple[int, int]]] = defaultdict(list)
     rows = len(puzzle_input.splitlines())
     cols = len(puzzle_input.splitlines()[0])
 
-    # get all antenas and coords
     for i, line in tqdm(
         enumerate(puzzle_input.splitlines()), desc="getting all antenas"
     ):
@@ -50,10 +56,7 @@ def solve(puzzle_input: str):
                 (antena2[0] - diff_x * t, antena2[1] - diff_y * t) for t in range(50)
             ]
             for c1 in coordinate_antinode1:
-                if not (
-                    # out of bounds
-                    c1[0] > rows - 1 or c1[0] < 0 or c1[1] > cols - 1 or c1[1] < 0
-                ):
+                if not (c1[0] > rows - 1 or c1[0] < 0 or c1[1] > cols - 1 or c1[1] < 0):
                     antinodes_list.append(c1)
 
             for c2 in coordinate_antinode2:
