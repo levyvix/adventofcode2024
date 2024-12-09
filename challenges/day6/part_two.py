@@ -19,8 +19,8 @@ def guards_original_path(guard_location, lines):
     current_direction = next(directions)  # up
 
     # need to keep track of every location the guard was
-    locations = []
-    locations.append(guard_location)
+    locations = set()
+    locations.add(guard_location)
 
     while True:
         # next move is out of bounds? break
@@ -31,12 +31,7 @@ def guards_original_path(guard_location, lines):
             or guard_location[1] + current_direction[1] >= len(lines[0])
         ):
             break
-        if (
-            lines[guard_location[0] + current_direction[0]][
-                guard_location[1] + current_direction[1]
-            ]
-            == "#"
-        ):
+        if lines[guard_location[0] + current_direction[0]][guard_location[1] + current_direction[1]] == "#":
             next_direction = next(directions)
             current_direction = next_direction
         else:
@@ -45,14 +40,12 @@ def guards_original_path(guard_location, lines):
                 guard_location[0] + current_direction[0],
                 guard_location[1] + current_direction[1],
             )
-            locations.append(guard_location)
-
-    return list(set(locations))
+            locations.add(guard_location)
+    print(len(locations))
+    return list(locations)
 
 
 def obstacle_loop(guard_location, lines):
-    # guard_location, lines = args
-
     directions = cycle(
         [
             (-1, 0),  # up
@@ -78,12 +71,7 @@ def obstacle_loop(guard_location, lines):
             or guard_location[1] + current_direction[1] >= len(lines[0])
         ):
             break
-        if (
-            lines[guard_location[0] + current_direction[0]][
-                guard_location[1] + current_direction[1]
-            ]
-            == "#"
-        ):
+        if lines[guard_location[0] + current_direction[0]][guard_location[1] + current_direction[1]] == "#":
             next_direction = next(directions)
             current_direction = next_direction
         else:
@@ -95,18 +83,17 @@ def obstacle_loop(guard_location, lines):
             )
             next_location = guard_location
 
-            # is he going in a direction that he has already been? if tuple (previus_location, next_location) is in locations, one after another
+            # is he going in a direction that he has already been?
+            # if tuple (previus_location, next_location) is in locations, one after another
             if previus_location in locations:
                 try:
-                    if (
-                        locations[locations.index(previus_location) + 1]
-                        == next_location
-                    ):
+                    if locations[locations.index(previus_location) + 1] == next_location:
                         # he is going in a direction he has already been
                         loop = True
                         break
                 except IndexError:
                     pass
+
             locations.append(guard_location)
 
     return loop
@@ -115,18 +102,18 @@ def obstacle_loop(guard_location, lines):
 def solve(puzzle_input: str):
     lines = puzzle_input.splitlines()
 
-    guard_location = (0, 0)
+    guard_location: tuple[int, int] = (0, 0)
     for i, line in enumerate(lines):
         for j in range(len(line)):
             if lines[i][j] == "^":
                 guard_location = (i, j)
 
+    print(guard_location)
     loops = 0
-
     # put a obstacle in every location the guard has been, minus the first one, because he is already there
     original_path = guards_original_path(guard_location, lines)
     list_of_new_lines = []
-    for location in original_path[1:]:
+    for location in original_path:
         new_lines = lines.copy()
         # change the location to an obstacle
         new_line = list(new_lines[location[0]])
@@ -135,17 +122,11 @@ def solve(puzzle_input: str):
         list_of_new_lines.append(new_lines)
 
     with Pool() as pool:
-        # Usar imap_unordered para integração direta com tqdm
-        results = pool.starmap(
-            obstacle_loop, [(guard_location, new) for new in list_of_new_lines]
-        )
+        results = pool.starmap(obstacle_loop, [(guard_location, new) for new in list_of_new_lines])
 
-        for result in results:
-            if result:
-                loops += 1
-    # for l in tqdm(list_of_new_lines):
-    #     if obstacle_loop(guard_location, l):
-    #         loops += 1
+    for result in results:
+        if result:
+            loops += 1
     return loops
 
 

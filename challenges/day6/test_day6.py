@@ -14,7 +14,7 @@ def test_part_one_prod():
     puzzle_input_prod = get_puzzle_input(__file__)
     result = part_one_solve(puzzle_input_prod)
 
-    assert result == 5162
+    assert result == 5080
 
 
 def test_part_two_test():

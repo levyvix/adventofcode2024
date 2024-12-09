@@ -12,8 +12,6 @@ def solve(puzzle_input: str):
             if lines[i][j] == "^":
                 guard_location = (i, j)
 
-    print(guard_location)
-
     directions = cycle(
         [
             (-1, 0),  # up
@@ -58,7 +56,7 @@ def solve(puzzle_input: str):
 
 
 if __name__ == "__main__":
-    run_prod = False
+    run_prod = True
 
     if run_prod:
         puzzle_input_prod = get_puzzle_input(__file__)

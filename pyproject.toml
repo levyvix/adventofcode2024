@@ -25,3 +25,6 @@ test = "pytest ."
 
 [tool.mypy]
 disable_error_code = "import-untyped"
+
+[tool.ruff]
+line-length = 120
