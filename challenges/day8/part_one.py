@@ -1,3 +1,4 @@
+from collections import defaultdict
 from itertools import chain, combinations
 
 from tqdm import tqdm
@@ -24,7 +25,7 @@ def draw(lines, antenas, antinodes):
 
 
 def solve(puzzle_input: str):
-    cache: dict[str, list[tuple[int, int]]] = {}
+    cache: dict[str, list[tuple[int, int]]] = defaultdict(list)
     rows = len(puzzle_input.splitlines())
     cols = len(puzzle_input.splitlines()[0])
 
@@ -34,11 +35,7 @@ def solve(puzzle_input: str):
     ):
         for char in line:
             if char != ".":
-                if char not in cache:
-                    # create a list of coordinates for that char
-                    cache[char] = [(i, line.index(char))]
-                else:
-                    cache[char].append((i, line.index(char)))
+                cache[char].append((i, line.index(char)))
 
     all_coords = list(chain(*cache.values()))
     antinodes_list = []
@@ -50,9 +47,7 @@ def solve(puzzle_input: str):
             coordinate_antinode2 = (antena2[0] - diff_x, antena2[1] - diff_y)
 
             if not (
-                # out of bounds
-                coordinate_antinode1 in all_coords
-                or coordinate_antinode1[0] > rows - 1
+                coordinate_antinode1[0] > rows - 1
                 or coordinate_antinode1[0] < 0
                 or coordinate_antinode1[1] > cols - 1
                 or coordinate_antinode1[1] < 0
@@ -60,8 +55,7 @@ def solve(puzzle_input: str):
                 antinodes_list.append(coordinate_antinode1)
 
             if not (
-                coordinate_antinode2 in all_coords
-                or coordinate_antinode2[0] > rows - 1
+                coordinate_antinode2[0] > rows - 1
                 or coordinate_antinode2[0] < 0
                 or coordinate_antinode2[1] > cols - 1
                 or coordinate_antinode2[1] < 0
