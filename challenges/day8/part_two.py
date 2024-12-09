@@ -1,3 +1,4 @@
+from collections import defaultdict
 from itertools import chain, combinations
 
 from tqdm import tqdm
@@ -24,7 +25,7 @@ def draw(lines, antenas: list[tuple[int, int]], antinodes: set):
 
 
 def solve(puzzle_input: str):
-    cache: dict[str, list[tuple[int, int]]] = {}
+    cache: dict[str, list[tuple[int, int]]] = defaultdict(list)
     rows = len(puzzle_input.splitlines())
     cols = len(puzzle_input.splitlines()[0])
 
@@ -34,11 +35,7 @@ def solve(puzzle_input: str):
     ):
         for char in line:
             if char != ".":
-                if char not in cache:
-                    # create a list of coordinates for that char
-                    cache[char] = [(i, line.index(char))]
-                else:
-                    cache[char].append((i, line.index(char)))
+                cache[char].append((i, line.index(char)))
 
     all_coords = list(chain(*cache.values()))
     antinodes_list = []
@@ -55,29 +52,19 @@ def solve(puzzle_input: str):
             for c1 in coordinate_antinode1:
                 if not (
                     # out of bounds
-                    c1 in all_coords
-                    or c1[0] > rows - 1
-                    or c1[0] < 0
-                    or c1[1] > cols - 1
-                    or c1[1] < 0
+                    c1[0] > rows - 1 or c1[0] < 0 or c1[1] > cols - 1 or c1[1] < 0
                 ):
                     antinodes_list.append(c1)
 
             for c2 in coordinate_antinode2:
-                if not (
-                    c2 in all_coords
-                    or c2[0] > rows - 1
-                    or c2[0] < 0
-                    or c2[1] > cols - 1
-                    or c2[1] < 0
-                ):
+                if not (c2[0] > rows - 1 or c2[0] < 0 or c2[1] > cols - 1 or c2[1] < 0):
                     antinodes_list.append(c2)
     draw(puzzle_input.splitlines(), all_coords, set(antinodes_list))
     return len(set(antinodes_list))
 
 
 if __name__ == "__main__":
-    run_prod = False
+    run_prod = True
 
     if run_prod:
         puzzle_input_prod = get_puzzle_input(__file__)
