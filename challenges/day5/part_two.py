@@ -1,18 +1,14 @@
-from loguru import logger
-
 from challenges.utils import get_puzzle_input, get_test_input
-
-from typing import List
 
 
 class Validator:
     def __init__(self, raw_input: str):
         self.puzzle_input = raw_input
-        self.afters_before: dict[str, dict[str, List[str]]] = {}
+        self.afters_before: dict[str, dict[str, list[str]]] = {}
         self.safe_pages: list[str] = []
-        self.middle_numbers: list[int] = []
 
     def build_hashmap(self):
+        """Build hashmsp with all the pages and their orders"""
         for line in self.puzzle_input.splitlines():
             if "," in line or line == "":
                 break
@@ -29,7 +25,8 @@ class Validator:
             self.afters_before[left]["before"].append(right)
             self.afters_before[right]["after"].append(left)
 
-    def is_page_safe(self, page, befores, afters, line):
+    def is_page_safe(self, page, befores, afters):
+        """check if the page follow the hashmap rules"""
         checks_before = [p in self.afters_before[page]["before"] for p in afters]
         checks_after = [p in self.afters_before[page]["after"] for p in befores]
 
@@ -38,14 +35,15 @@ class Validator:
         return False
 
     def get_safe_pages(self):
+        """
+        Get all the safe pages and store them in safe_pages list.
+        If a page is not safe, try to find the correct order
+        """
         for line in self.puzzle_input.splitlines():
             if "|" in line or line == "":
                 continue
 
-            if self.is_line_safe(line):
-                # self.safe_pages.append(line.strip())
-                pass
-            else:
+            if not self.is_line_safe(line):
                 safe_line = self.get_correct_order(line)
                 if safe_line:
                     self.safe_pages.append(",".join(safe_line))
@@ -89,17 +87,20 @@ class Validator:
         return result
 
     def is_line_safe(self, line: str):
-        checks = []
-        for page in line.strip().split(","):
+        checks: list[bool] = []
+        for page in line.split(","):
             befores_raw, afters_raw = line.split(page)
-            befores = befores_raw.strip().split(",")
+            befores: list[str] = befores_raw.split(",")
+            afters: list[str] = afters_raw.split(",")
             # remove empty strings
             befores = [x for x in befores if x != ""]
-            afters = afters_raw.strip().split(",")
-            # remove empty strings
             afters = [x for x in afters if x != ""]
 
-            page_is_safe = self.is_page_safe(page, befores, afters, line.split(","))
+            page_is_safe = self.is_page_safe(
+                page,
+                befores,
+                afters,
+            )
 
             checks.append(page_is_safe)
 
@@ -119,7 +120,6 @@ class Validator:
         return self.get_middle_numbers()
 
 
-@logger.catch
 def solve(puzzle_input: str):
     validator = Validator(puzzle_input)
     return validator.validate()
