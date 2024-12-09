@@ -36,12 +36,7 @@ def solve(puzzle_input: str):
             or guard_location[1] + current_direction[1] >= len(lines[0])
         ):
             break
-        if (
-            lines[guard_location[0] + current_direction[0]][
-                guard_location[1] + current_direction[1]
-            ]
-            == "#"
-        ):
+        if lines[guard_location[0] + current_direction[0]][guard_location[1] + current_direction[1]] == "#":
             next_direction = next(directions)
             current_direction = next_direction
         else:

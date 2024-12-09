@@ -107,13 +107,16 @@ def solve(puzzle_input: str):
         for j in range(len(line)):
             if lines[i][j] == "^":
                 guard_location = (i, j)
+                break
+        else:
+            continue
+        break
 
-    print(guard_location)
     loops = 0
     # put a obstacle in every location the guard has been, minus the first one, because he is already there
     original_path = guards_original_path(guard_location, lines)
     list_of_new_lines = []
-    for location in original_path:
+    for location in original_path:  # with the guard position
         new_lines = lines.copy()
         # change the location to an obstacle
         new_line = list(new_lines[location[0]])

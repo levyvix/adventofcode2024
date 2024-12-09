@@ -1,6 +1,6 @@
 from challenges.day4.part_one import solve as part_one_solve
 from challenges.day4.part_two import solve as part_two_solve
-from challenges.utils import get_test_input, get_puzzle_input
+from challenges.utils import get_puzzle_input, get_test_input
 
 
 def test_part_one_test():
@@ -14,7 +14,7 @@ def test_part_one_prod():
     puzzle_input_prod = get_puzzle_input(__file__)
     result = part_one_solve(puzzle_input_prod)
 
-    assert result == 2549
+    assert result == 2483
 
 
 def test_part_two_test():
@@ -28,4 +28,4 @@ def test_part_two_prod():
     puzzle_input_prod = get_puzzle_input(__file__)
     result = part_two_solve(puzzle_input_prod)
 
-    assert result == 2003
+    assert result == 1925

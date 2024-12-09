@@ -36,9 +36,7 @@ def solve(puzzle_input: str) -> int:
     rows = len(puzzle_input.splitlines())
     cols = len(puzzle_input.splitlines()[0])
 
-    for i, line in tqdm(
-        enumerate(puzzle_input.splitlines()), desc="getting all antenas"
-    ):
+    for i, line in tqdm(enumerate(puzzle_input.splitlines()), desc="getting all antenas"):
         for char in line:
             if char != ".":
                 cache[char].append((i, line.index(char)))
@@ -49,12 +47,8 @@ def solve(puzzle_input: str) -> int:
         for antena1, antena2 in combinations(cache[key], 2):
             diff_x = antena1[0] - antena2[0]
             diff_y = antena1[1] - antena2[1]
-            coordinate_antinode1 = [
-                (antena1[0] + diff_x * t, antena1[1] + diff_y * t) for t in range(50)
-            ]
-            coordinate_antinode2 = [
-                (antena2[0] - diff_x * t, antena2[1] - diff_y * t) for t in range(50)
-            ]
+            coordinate_antinode1 = [(antena1[0] + diff_x * t, antena1[1] + diff_y * t) for t in range(50)]
+            coordinate_antinode2 = [(antena2[0] - diff_x * t, antena2[1] - diff_y * t) for t in range(50)]
             for c1 in coordinate_antinode1:
                 if not (c1[0] > rows - 1 or c1[0] < 0 or c1[1] > cols - 1 or c1[1] < 0):
                     antinodes_list.append(c1)
@@ -67,7 +61,7 @@ def solve(puzzle_input: str) -> int:
 
 
 if __name__ == "__main__":
-    run_prod = True
+    run_prod = False
 
     if run_prod:
         puzzle_input_prod = get_puzzle_input(__file__)

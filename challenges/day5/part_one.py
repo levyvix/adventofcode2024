@@ -1,6 +1,8 @@
-from challenges.utils import get_puzzle_input, get_test_input
-from loguru import logger
 from typing import List
+
+from loguru import logger
+
+from challenges.utils import get_puzzle_input, get_test_input
 
 
 class Validator:
@@ -42,9 +44,7 @@ class Validator:
                 # remove empty strings
                 afters = [x for x in afters if x != ""]
 
-                checks_before = [
-                    p in self.afters_before[page]["before"] for p in afters
-                ]
+                checks_before = [p in self.afters_before[page]["before"] for p in afters]
                 checks_after = [p in self.afters_before[page]["after"] for p in befores]
 
                 if all(checks_before) and all(checks_after):
@@ -69,7 +69,6 @@ class Validator:
         return self.get_middle_numbers()
 
 
-@logger.catch
 def solve(puzzle_input: str):
     validator = Validator(puzzle_input)
     return validator.validate()

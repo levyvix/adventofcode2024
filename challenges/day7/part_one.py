@@ -16,13 +16,9 @@ def solve(puzzle_input: str):
             for i, op in enumerate(combination):
                 next_number = equations[i + 1]
                 if op == "+":
-                    sum_of_combination = eval(
-                        f"{sum_of_combination} {op} {next_number}"
-                    )
+                    sum_of_combination = eval(f"{sum_of_combination} {op} {next_number}")
                 if op == "*":
-                    sum_of_combination = eval(
-                        f"{sum_of_combination} {op} {next_number}"
-                    )
+                    sum_of_combination = eval(f"{sum_of_combination} {op} {next_number}")
 
             if sum_of_combination == int(test_value):
                 safe_lines.append(test_value)

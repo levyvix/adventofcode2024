@@ -30,9 +30,7 @@ def solve(puzzle_input: str):
     cols = len(puzzle_input.splitlines()[0])
 
     # get all antenas and coords
-    for i, line in tqdm(
-        enumerate(puzzle_input.splitlines()), desc="getting all antenas"
-    ):
+    for i, line in tqdm(enumerate(puzzle_input.splitlines()), desc="getting all antenas"):
         for char in line:
             if char != ".":
                 cache[char].append((i, line.index(char)))
