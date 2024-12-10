@@ -1,7 +1,5 @@
 from typing import List
 
-from loguru import logger
-
 from challenges.utils import get_puzzle_input, get_test_input
 
 

@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "loguru>=0.7.3",
-    "matplotlib>=3.9.3",
     "mypy>=1.13.0",
     "pathos>=0.3.3",
     "pytest>=8.3.4",
