@@ -1,46 +1,35 @@
-from itertools import chain
-
 from tqdm import tqdm
 
 from challenges.utils import get_puzzle_input, get_test_input
 
 
-def remap_block(block: list[str | int]):
-    new_block = block[:]
-
-    for old_pos, value in tqdm(reversed(list(enumerate(block))), desc="remapping", total=len(block)):
-        if value == ".":
-            continue
-
-        for dot_pos, n_value in enumerate(new_block):
-            if n_value == "." and any(x != "." for x in new_block[dot_pos:]):
-                new_block[old_pos], new_block[dot_pos] = ".", value
-                break
-        else:
-            return new_block
-
-
 def solve(puzzle_input):
-    final_block = []
-    for line in puzzle_input.splitlines():
-        i = 0
-        for j, char in enumerate(line):
-            if j % 2 == 0:
-                final_block.append([i] * int(char))
-                i += 1
-            else:
-                final_block.append("." * int(char))
+    # Parse the disk map into blocks
+    blocks = []
+    file_id = 0
+    for i, char in enumerate(puzzle_input):
+        length = int(char)
+        if i % 2 == 0:  # File length
+            blocks.extend([file_id] * length)
+            file_id += 1
+        else:  # Free space length
+            blocks.extend(["."] * length)
 
-    final_block = list(chain(*final_block))
-    new_block = remap_block(final_block)
+    # Compact the disk map
+    left = 0
+    n_nums = sum(1 for x in blocks if x != ".")
+    for right in tqdm(range(len(blocks) - 1, 0, -1), desc="compact", total=n_nums):
+        if blocks[right] != ".":
+            blocks[blocks.index(".")], blocks[right] = blocks[right], "."
+            left += 1
 
-    soma_total = 0
-    for i, value in tqdm(enumerate(new_block)):
-        if value == ".":
+        if right == n_nums:
             break
-        soma_total += int(value) * i
 
-    return soma_total
+    # Calculate the checksum
+    checksum = sum(i * block for i, block in enumerate(blocks) if block != ".")
+
+    return checksum
 
 
 if __name__ == "__main__":
