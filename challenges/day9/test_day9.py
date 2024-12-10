@@ -13,15 +13,15 @@ def test_part_one_test():
     assert result == 1928
 
 
-# def test_part_one_prod():
-#     if not run_prod:
-#         return
-#     puzzle_input_prod = get_puzzle_input(__file__)
-#     print("Puzzle Input:", puzzle_input_prod)  # Print the input for debugging
-#     result = part_one_solve(puzzle_input_prod)
+def test_part_one_prod():
+    if not run_prod:
+        return
+    puzzle_input_prod = get_puzzle_input(__file__)
+    print("Puzzle Input:", puzzle_input_prod)  # Print the input for debugging
+    result = part_one_solve(puzzle_input_prod)
 
-#     print("Result:", result)  # Print the result for debugging
-#     assert result == 5162
+    print("Result:", result)  # Print the result for debugging
+    assert result == 6386640365805
 
 
 def test_part_two_test():
@@ -32,12 +32,12 @@ def test_part_two_test():
     assert result == 2858
 
 
-# def test_part_two_prod():
-#     if not run_prod:
-#         return
-#     puzzle_input_prod = get_puzzle_input(__file__)
-#     print("Puzzle Input:", puzzle_input_prod)  # Print the input for debugging
-#     result = part_two_solve(puzzle_input_prod)
+def test_part_two_prod():
+    if not run_prod:
+        return
+    puzzle_input_prod = get_puzzle_input(__file__)
+    print("Puzzle Input:", puzzle_input_prod)  # Print the input for debugging
+    result = part_two_solve(puzzle_input_prod)
 
-#     print("Result:", result)  # Print the result for debugging
-#     assert result == 1909
+    print("Result:", result)  # Print the result for debugging
+    assert result == 6423258376982
