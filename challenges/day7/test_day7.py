@@ -1,6 +1,7 @@
-from challenges.day7.part_one import solve as part_one_solve
-from challenges.day7.part_two import solve as part_two_solve
 from challenges.utils import get_puzzle_input, get_test_input
+
+from .part_one import solve as part_one_solve
+from .part_two import solve as part_two_solve
 
 run_prod = False
 
