@@ -1,22 +1,46 @@
 from collections import deque
-from ctypes.wintypes import PUSHORT
-from pdb import run
 
 from ..utils import get_puzzle_input, get_test_input
 
 
-def parse_map(map_str):
-    """Parse the input map string into a grid."""
+def parse_map(map_str: str) -> list[list[int]]:
+    """
+    Parse the input map string into a grid.
+
+    Args:
+        map_str (str): A string representation of the map.
+
+    Returns:
+        list[list[int]]: A 2D grid of integers.
+    """
     return [[int(char) for char in line] for line in map_str.strip().splitlines()]
 
 
-def find_trailheads(grid):
-    """Find all positions with height 0."""
+def find_trailheads(grid: list[list[int]]) -> list[tuple[int, int]]:
+    """
+    Find all zeros positions [(x0,y0), (x0, y0)].
+
+    Args:
+        grid (list[list[int]]): A 2D grid of integers.
+
+    Returns:
+        list[tuple[int, int]]: A list of positions with height
+
+    """
     return [(i, j) for i, row in enumerate(grid) for j, val in enumerate(row) if val == 0]
 
 
-def calculate_score(grid, start):
-    """Calculate the score of a trailhead using BFS."""
+def calculate_score(grid: list[list[int]], start: tuple[int, int]) -> int:
+    """
+    Calculate the score of a trailhead using BFS.
+
+    Args:
+        grid (list[list[int]]): A 2D grid of integers.
+        start (tuple[int, int]): The starting position, zero position (x,y).
+
+    Retunrs:
+        int: The score of the trailhead.
+    """
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     queue = deque([(start, 0)])  # (position, current height)
     visited = set()
@@ -44,15 +68,32 @@ def calculate_score(grid, start):
     return len(reachable_nines)
 
 
-def total_trailhead_scores(map_str):
-    """Compute the sum of scores for all trailheads."""
+def total_trailhead_scores(map_str: str) -> int:
+    """
+    Compute the sum of scores for all trailheads
+
+    Args:
+        map_str (str): A string representation of the map.
+
+    Returns:
+        int: The sum of scores for all trailheads.
+    """
     grid = parse_map(map_str)
     trailheads = find_trailheads(grid)
     total_score = sum(calculate_score(grid, trailhead) for trailhead in trailheads)
     return total_score
 
 
-def solve(puzzle_input):
+def solve(puzzle_input: str) -> int:
+    """
+    Receive the puzzle input and return the answer
+
+    Args:
+        puzzle_input (str): A string representation of the map.
+
+    Returns:
+        int: The sum of scores for all trailheads.
+    """
     return total_trailhead_scores(puzzle_input)
 
 
