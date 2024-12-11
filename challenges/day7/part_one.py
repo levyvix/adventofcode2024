@@ -1,30 +1,44 @@
 from itertools import product
 
 from challenges.utils import get_puzzle_input, get_test_input
+from tqdm import tqdm
 
 
-def solve(puzzle_input: str):
-    safe_lines = []
-    for line in puzzle_input.splitlines():
-        test_value = line.split(":")[0]
+def test_combination(combination: tuple[str, ...], equations: list[int], test_value: int) -> bool:
+    result = equations[0]
+    for i, op in enumerate(combination):
+        next_number = equations[i + 1]
+        if op == "+":
+            result += next_number
+        elif op == "*":
+            result *= next_number
+
+        if result > test_value:
+            return False
+
+    return result == test_value
+
+
+def solve(puzzle_input: str) -> int:
+    soma_total = 0
+    for line in tqdm(puzzle_input.splitlines(), desc="verifying lines..."):
+        test_value = int(line.split(":")[0])
         equations = line.split(":")[1].lstrip().split(" ")
+        equations = [int(x) for x in equations]
 
         operations = ["+", "*"]
+        found_valid = False
 
-        for combination in product(operations, repeat=len(equations) - 1):
-            sum_of_combination = equations[0]
-            for i, op in enumerate(combination):
-                next_number = equations[i + 1]
-                if op == "+":
-                    sum_of_combination = eval(f"{sum_of_combination} {op} {next_number}")
-                if op == "*":
-                    sum_of_combination = eval(f"{sum_of_combination} {op} {next_number}")
-
-            if sum_of_combination == int(test_value):
-                safe_lines.append(test_value)
+        combinations = list(product(operations, repeat=len(equations) - 1))
+        for comb in combinations:
+            if test_combination(comb, equations, test_value):
+                found_valid = True
                 break
 
-    return sum([int(str_v) for str_v in safe_lines])
+        if found_valid:
+            soma_total += test_value
+
+    return soma_total
 
 
 if __name__ == "__main__":

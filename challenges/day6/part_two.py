@@ -41,7 +41,6 @@ def guards_original_path(guard_location, lines):
                 guard_location[1] + current_direction[1],
             )
             locations.add(guard_location)
-    print(len(locations))
     return list(locations)
 
 

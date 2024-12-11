@@ -97,6 +97,7 @@ def solve(puzzle_input: str) -> int:
     return total_trailhead_scores(puzzle_input)
 
 
+print("hello")
 if __name__ == "__main__":
     run_prod = True
 
