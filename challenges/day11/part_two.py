@@ -1,7 +1,8 @@
 from functools import cache
 
 # stones = map(int, """125 17""".split())
-stones = map(int, """554735 45401 8434 0 188 7487525 77 7""".split())
+
+inp = """125 17"""
 
 
 @cache
@@ -17,4 +18,9 @@ def count(stone, steps):
     return count(stone * 2024, steps - 1)
 
 
-print(sum(count(stone, 75) for stone in stones))
+def solve(inp: str) -> int:
+    stones = map(int, inp.split())
+    return sum(count(stone, 75) for stone in stones)
+
+
+print(solve(inp))

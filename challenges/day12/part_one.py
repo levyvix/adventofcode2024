@@ -3,12 +3,6 @@ from pathlib import Path
 
 from rich import print
 
-with open(Path(__file__).parent / "puzzle_input.txt") as f:
-    inp = f.read()
-
-
-grid = [[char for char in line] for line in inp.strip().splitlines()]
-
 
 def get_groups(grid):
     rows = len(grid)
@@ -35,9 +29,6 @@ def get_groups(grid):
     return groups
 
 
-groups = get_groups(grid)
-
-
 def perimeter(region):
     total_perimeter = 0
     for r, c in region:
@@ -47,4 +38,13 @@ def perimeter(region):
     return total_perimeter
 
 
-print(sum(len(g) * perimeter(g) for g in groups))  # 1437300
+def solve(inp: str) -> int:
+    grid = [[char for char in line] for line in inp.strip().splitlines()]
+    groups = get_groups(grid)
+    return sum(len(g) * perimeter(g) for g in groups)  # 1437300
+
+
+if __name__ == "__main__":
+    with open(Path(__file__).parent / "puzzle_input.txt") as f:
+        inp = f.read()
+    print(solve(inp))

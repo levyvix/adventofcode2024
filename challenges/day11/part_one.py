@@ -1,9 +1,10 @@
-inp = """125 17"""
-inp = """554735 45401 8434 0 188 7487525 77 7"""
 from tqdm import tqdm
 
+inp = """125 17"""
+inp = """554735 45401 8434 0 188 7487525 77 7"""
 
-def solve(s: str) -> str:
+
+def blink(s: str) -> str:
     ns = []
     for n in s.split():
         if len(n) % 2 == 0:
@@ -28,7 +29,11 @@ def solve(s: str) -> str:
     return " ".join(ns)
 
 
-for i in tqdm(range(25)):
-    inp = solve(inp)
+def solve(inp: str) -> int:
+    for i in tqdm(range(25)):
+        inp = blink(inp)
 
-print(len(inp.split()))
+    return len(inp.split())
+
+
+print(solve(inp))
