@@ -38,9 +38,7 @@ class Solver:
                 self.first_numbers.append(int(number_a))
                 self.second_numbers.append(int(number_b))
             except ValueError as e:
-                raise ValueError(
-                    f"Invalid line format: {line}. Expected two numbers separated by two spaces."
-                ) from e
+                raise ValueError(f"Invalid line format: {line}. Expected two numbers separated by two spaces.") from e
 
     def _sort_number_lists(self) -> None:
         """Sort both lists of numbers in ascending order."""

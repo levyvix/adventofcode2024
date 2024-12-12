@@ -33,12 +33,7 @@ class VerificaXMAS:
 
     def forma_xmas(self) -> bool:
         # tem que ter 1 em baixo e 1 em cima e 1 pra direita e 1 pra esquerda
-        if (
-            self.y - 1 < 0
-            or self.y + 1 >= len(self.lines)
-            or self.x - 1 < 0
-            or self.x + 1 >= len(self.lines[0])
-        ):
+        if self.y - 1 < 0 or self.y + 1 >= len(self.lines) or self.x - 1 < 0 or self.x + 1 >= len(self.lines[0]):
             return False
 
         if self.diagonal_direita() and self.diagonal_esquerda():

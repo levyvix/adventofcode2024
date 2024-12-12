@@ -51,9 +51,7 @@ class Validator:
     def find_start_number(self, nums):
         # Find a number that has no "after" dependencies or has all its "after" dependencies outside the current line
         for num in nums:
-            if not self.afters_before[num]["after"] or all(
-                dep not in nums for dep in self.afters_before[num]["after"]
-            ):
+            if not self.afters_before[num]["after"] or all(dep not in nums for dep in self.afters_before[num]["after"]):
                 return num
         return None
 
@@ -67,14 +65,9 @@ class Validator:
             next_num = None
             for num in remaining:
                 # Check if all required "after" numbers are already in result
-                if all(
-                    after not in remaining for after in self.afters_before[num]["after"]
-                ):
+                if all(after not in remaining for after in self.afters_before[num]["after"]):
                     # Check if all required "before" numbers are still in remaining or not in the line
-                    if all(
-                        before in remaining or before not in nums
-                        for before in self.afters_before[num]["before"]
-                    ):
+                    if all(before in remaining or before not in nums for before in self.afters_before[num]["before"]):
                         next_num = num
                         break
 

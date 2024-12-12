@@ -13,10 +13,7 @@ class VerificaXMAS:
         if self.y - 3 < 0 or self.x - 3 < 0:
             return False
         try:
-            return (
-                "".join([self.lines[self.y - i][self.x - i] for i in range(4)])
-                == "XMAS"
-            )
+            return "".join([self.lines[self.y - i][self.x - i] for i in range(4)]) == "XMAS"
         except IndexError:
             return False
 
@@ -28,10 +25,7 @@ class VerificaXMAS:
         if self.y - 3 < 0 or self.x + 3 > len(self.lines[0]):
             return False
         try:
-            return (
-                "".join([self.lines[self.y - i][self.x + i] for i in range(4)])
-                == "XMAS"
-            )
+            return "".join([self.lines[self.y - i][self.x + i] for i in range(4)]) == "XMAS"
         except IndexError:
             return False
 
@@ -42,10 +36,7 @@ class VerificaXMAS:
         if self.y + 3 > len(self.lines) or self.x - 3 < 0:
             return False
         try:
-            return (
-                "".join([self.lines[self.y + i][self.x - i] for i in range(4)])
-                == "XMAS"
-            )
+            return "".join([self.lines[self.y + i][self.x - i] for i in range(4)]) == "XMAS"
         except IndexError:
             return False
 
@@ -55,10 +46,7 @@ class VerificaXMAS:
         if self.y + 3 > len(self.lines) or self.x + 3 > len(self.lines[0]):
             return False
         try:
-            return (
-                "".join([self.lines[self.y + i][self.x + i] for i in range(4)])
-                == "XMAS"
-            )
+            return "".join([self.lines[self.y + i][self.x + i] for i in range(4)]) == "XMAS"
         except IndexError:
             return False
 
@@ -79,14 +67,7 @@ class VerificaXMAS:
         try:
             return (
                 True
-                if "".join(
-                    list(
-                        map(
-                            lambda lista: lista[self.x], self.lines[self.y : self.y + 4]
-                        )
-                    )
-                )
-                == "XMAS"
+                if "".join(list(map(lambda lista: lista[self.x], self.lines[self.y : self.y + 4]))) == "XMAS"
                 else False
             )
         except IndexError:
