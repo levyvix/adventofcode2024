@@ -1,8 +1,0 @@
-{
-	"name": "Run Current File with -m",
-	"type": "python",
-	"request": "launch",
-	"module": "challenges.${relativeFileDirname.replace('challenges/', '').replace('/', '.')}.${fileBasenameNoExtension}",
-	"args": [],
-	"cwd": "${workspaceFolder}"
-}
