@@ -37,7 +37,7 @@ def show_menu(
             input_path = Path(f"challenges/day{day}/puzzle_input.txt")
             input_entered = input_path.read_text()
         except FileNotFoundError:
-            typer.echo(f"Error: Input file not found at {input_path}", err=True)
+            typer.echo("Error: Input file not found", err=True)
             raise typer.Exit(code=1)
 
     if part not in (1, 2):
