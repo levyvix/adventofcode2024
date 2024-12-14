@@ -1,71 +1,63 @@
 import re
 from pathlib import Path
 
+import numpy as np
 from icecream import ic
-from pulp import LpConstraint, LpMinimize, LpProblem, LpSolverDefault, LpVariable, lpSum, value
-
-LpSolverDefault.msg = False
 
 file = (Path(__file__).parent / "puzzle_input.txt").read_text()
 
-claws = []
-claw = []
-for i, line in enumerate(file.splitlines()):
-    if "Button A" in line:
-        button_a_pattern = re.compile(r"Button A: X\+(\d+), Y\+(\d+)")
-        claw.append(list(map(int, button_a_pattern.findall(line)[0])))
 
-    if "Button B" in line:
-        button_b_pattern = re.compile(r"Button B: X\+(\d+), Y\+(\d+)")
-        claw.append(list(map(int, button_b_pattern.findall(line)[0])))
+def get_claws(file: str):
+    claws = []
+    claw = []
+    for i, line in enumerate(file.splitlines()):
+        if "Button A" in line:
+            button_a_pattern = re.compile(r"Button A: X\+(\d+), Y\+(\d+)")
+            claw.append(list(map(int, button_a_pattern.findall(line)[0])))
 
-    if "Prize" in line:
-        prize_pattern = re.compile(r"Prize: X=(\d+), Y=(\d+)")
-        prize = list(map(int, prize_pattern.findall(line)[0]))
-        claw.append(prize)
+        if "Button B" in line:
+            button_b_pattern = re.compile(r"Button B: X\+(\d+), Y\+(\d+)")
+            claw.append(list(map(int, button_b_pattern.findall(line)[0])))
 
-    if not line or i == len(file.splitlines()) - 1:
-        claws.append(claw)
-        claw = []
-        continue
+        if "Prize" in line:
+            prize_pattern = re.compile(r"Prize: X=(\d+), Y=(\d+)")
+            prize = list(map(int, prize_pattern.findall(line)[0]))
+            claw.append(prize)
+
+        if not line or i == len(file.splitlines()) - 1:
+            claws.append(claw)
+            claw = []
+            continue
+
+    return claws
 
 
 def determine_a_b(a: list[int], b: list[int], target: list[int]):
-    # Criação do problema de minimização
-    prob = LpProblem("ClawMachine", LpMinimize)
+    A = np.array([[a[0], b[0]], [a[1], b[1]]])
 
-    # Variáveis de decisão (inteiras)
-    x = LpVariable("ButtonA", lowBound=0, cat="Integer")
-    y = LpVariable("ButtonB", lowBound=0, cat="Integer")
+    B = np.array(target)
 
-    # Função objetivo: minimizar o custo total
-    prob += 3 * x + y
+    res = np.linalg.solve(A, B)
 
-    # Restrições
-    # prob += a[0] * x + b[0] * y == target[0]  # X constraint
-    prob += LpConstraint(a[0] * x + b[0] * y, sense=0, rhs=target[0])  # X constraint
-    # prob += a[1] * x + b[1] * y == target[1]  # Y constraint
-    prob += LpConstraint(a[1] * x + b[1] * y, sense=0, rhs=target[1])  # Y constraint
+    pressa = round(res[0])
+    pressb = round(res[1])
 
-    # the button cant be pressed more than 100 times
-    prob += x <= 100
-    prob += y <= 100
-
-    # solve
-    prob.solve()
-
-    if prob.objective.value() % 1 == 0:
-        return int(x.value()), int(value(y)), int(prob.objective.value())
+    if pressa * a[0] + pressb * b[0] == target[0] and pressa * a[1] + pressb * b[1] == target[1]:
+        return pressa, pressb
     else:
-        return int(x.value()), int(value(y)), 0
+        return 0, 0
 
 
-total_cost = 0
-for claw in claws:
-    x, y, cost = determine_a_b(claw[0], claw[1], claw[2])
-    if cost:
-        total_cost += cost
-    # print(f"Button A presses: {x}, Button B presses: {y}, Total Cost: {cost}")
+def solve(file: str) -> int:
+    claws = get_claws(file)
+    total_cost = 0
+    for claw in claws:
+        pressa, pressb = determine_a_b(claw[0], claw[1], claw[2])
+        tokens = 3 * pressa + pressb
+        total_cost += tokens
 
-# print(f"Total cost for all claws: {total_cost}")
-ic(total_cost)
+    return total_cost
+
+
+if __name__ == "__main__":
+    ic(solve(file))
