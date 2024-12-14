@@ -4,10 +4,10 @@ from pathlib import Path
 import numpy as np
 from icecream import ic
 
-file = (Path(__file__).parent / "puzzle_input.txt").read_text()
+file: str = (Path(__file__).parent / "puzzle_input.txt").read_text()
 
 
-def get_claws(file: str):
+def get_claws(file: str) -> list[list[list[int]]]:
     claws = []
     claw = []
     for i, line in enumerate(file.splitlines()):
@@ -24,6 +24,7 @@ def get_claws(file: str):
             prize = list(map(int, prize_pattern.findall(line)[0]))
             claw.append(prize)
 
+        # if end of block or end of file
         if not line or i == len(file.splitlines()) - 1:
             claws.append(claw)
             claw = []
@@ -32,13 +33,14 @@ def get_claws(file: str):
     return claws
 
 
-def determine_a_b(a: list[int], b: list[int], target: list[int]):
+def determine_a_b(a: list[int], b: list[int], target: list[int]) -> tuple[int, int]:
     A = np.array([[a[0], b[0]], [a[1], b[1]]])
 
     B = np.array(target)
 
     res = np.linalg.solve(A, B)
 
+    # to solve the digits issue (10.002), round and see if it's equal to the target
     pressa = round(res[0])
     pressb = round(res[1])
 
@@ -53,6 +55,7 @@ def solve(file: str) -> int:
     total_cost = 0
     for claw in claws:
         pressa, pressb = determine_a_b(claw[0], claw[1], claw[2])
+        # 3 tokens for each press of button A and 1 token for each press of button B
         tokens = 3 * pressa + pressb
         total_cost += tokens
 
