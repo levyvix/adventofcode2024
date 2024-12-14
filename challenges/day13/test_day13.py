@@ -17,7 +17,7 @@ def test_part_one_prod():
     assert solve(file) == 33427
 
 
-def tet_part_two_test():
+def test_part_two_test():
     from challenges.day13.part_two import solve
 
     file = get_test_input(__file__)
