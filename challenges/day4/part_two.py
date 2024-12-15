@@ -1,5 +1,4 @@
 from challenges.utils import get_puzzle_input, get_test_input
-from loguru import logger
 
 
 class VerificaXMAS:
@@ -8,7 +7,6 @@ class VerificaXMAS:
         self.y = y
         self.lines = lines
 
-    @logger.catch
     def diagonal_direita(self):
         cima = self.lines[self.y - 1][self.x - 1]
         meio = self.lines[self.y][self.x]
@@ -20,7 +18,6 @@ class VerificaXMAS:
 
         return False
 
-    @logger.catch
     def diagonal_esquerda(self):
         cima = self.lines[self.y - 1][self.x + 1]
         meio = self.lines[self.y][self.x]

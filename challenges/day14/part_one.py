@@ -14,14 +14,16 @@ def make_robots_coords(file: str) -> list[tuple[int, int, int, int]]:
     Returns:
                 list[tuple[int, int, int, int]]: the coords of robots and their velocities (row, column, velocity_row, velocity_column)
     """
-    robots = []
-    for line in file.split("\n"):
+    robots: list[tuple[int, int, int, int]] = []
+    for line in file.split(sep="\n"):
         c, r, vc, vr = map(int, re.findall(r"(-?\d+)", line))
         robots.append((r, c, vr, vc))
     return robots
 
 
-def next_100_seconds(robots, grid_size=(103, 101)) -> list[tuple[int, int, int, int]]:
+def next_100_seconds(
+    robots: list[tuple[int, int, int, int]], grid_size: tuple[int, int] = (103, 101)
+) -> list[tuple[int, int, int, int]]:
     """simulate the next 100 seconds of the robots
 
     Args:
@@ -31,7 +33,7 @@ def next_100_seconds(robots, grid_size=(103, 101)) -> list[tuple[int, int, int, 
     Returns:
         (list[tuple[int,int,int,int]]): the robots coordinates and velocities after 100 seconds
     """
-    for second in range(100):
+    for _ in range(100):
         for i, robot in enumerate(robots):
             r, c, vr, vc = robot
             r += vr
@@ -71,12 +73,12 @@ def sum_quadrants(robots: list[tuple[int, int, int, int]], grid_size: tuple[int,
 
 def solve(file: str) -> int:
     GRID_SIZE = (103, 101)
-    robots = make_robots_coords(file)
-    robots_future = next_100_seconds(robots, grid_size=GRID_SIZE)
-    return sum_quadrants(robots_future, GRID_SIZE)
+    robots = make_robots_coords(file=file)
+    robots_future = next_100_seconds(robots=robots, grid_size=GRID_SIZE)
+    return sum_quadrants(robots=robots_future, grid_size=GRID_SIZE)
 
 
 if __name__ == "__main__":
-    file = (Path(__file__).parent / "puzzle_input.txt").read_text()
+    file: str = (Path(__file__).parent / "puzzle_input.txt").read_text()
 
     ic(solve(file))
