@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from icecream import ic
 
 
@@ -56,7 +57,7 @@ def solve(file: str) -> int:
     return sum(100 * r + c for r in range(rows) for c in range(cols) if grid[r][c] == "[")
 
 
-if __name__ == '__main__':
-    file = (Path(__file__).parent / 'test_input.txt').read_text()
+if __name__ == "__main__":
+    file = (Path(__file__).parent / "test_input.txt").read_text()
 
     ic(solve(file))

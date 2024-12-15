@@ -1,36 +1,10 @@
-import time
-from itertools import repeat
 from pathlib import Path
 
 from icecream import ic
 
-file = (Path(__file__).parent / "puzzle_input.txt").read_text()
-
 
 def get_positions(grid: str):
     return [list(line) for line in grid.splitlines()]
-
-
-def is_valid_move(grid, pos):
-    rows, cols = len(grid), len(grid[0])
-    return 0 <= pos[0] < rows and 0 <= pos[1] < cols and grid[pos[0]][pos[1]] != "#"
-
-
-def move_box(grid: list[str], boxes, old_pos, new_pos):
-    grid[old_pos[0]][old_pos[1]] = "."
-    grid[new_pos[0]][new_pos[1]] = "O"
-    boxes.remove(old_pos)
-    boxes.add(new_pos)
-
-
-def print_grid(grid, boxes, arrow):
-    grid = [list(row) for row in grid]
-    for box in boxes:
-        grid[box[0]][box[1]] = "O"
-    grid[arrow[0]][arrow[1]] = "@"
-    for row in grid:
-        print("".join(row))
-    print()
 
 
 def find_arrow(grid) -> tuple[int, int]:
@@ -77,4 +51,5 @@ def solve(file: str) -> int:
 
 
 if __name__ == "__main__":
+    file = (Path(__file__).parent / "puzzle_input.txt").read_text()
     ic(solve(file))
