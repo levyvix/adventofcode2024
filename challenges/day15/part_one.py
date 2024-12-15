@@ -41,7 +41,7 @@ def find_arrow(grid) -> tuple[int, int]:
     return (0, 0)
 
 
-def solve(file: str):
+def solve(file: str) -> int:
     top, bottom = file.split("\n\n")
     movements = bottom.replace("\n", "")
     grid = get_positions(top)
@@ -73,7 +73,7 @@ def solve(file: str):
         r += dr
         c += dc
 
-    ic(sum(100 * r + c for r in range(len(grid)) for c in range(len(grid[0])) if grid[r][c] == "O"))
+    return sum(100 * r + c for r in range(len(grid)) for c in range(len(grid[0])) if grid[r][c] == "O")
 
 
 if __name__ == "__main__":
